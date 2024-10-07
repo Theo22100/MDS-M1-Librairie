@@ -186,4 +186,27 @@ router.put('/:id', loanController.updateLoan);
  */
 router.delete('/:id', loanController.deleteLoan);
 
+/**
+ * @swagger
+ * /api/loans/{loanId}/return:
+ *   put:
+ *     summary: Retourner un livre emprunté
+ *     tags: [Loans]
+ *     parameters:
+ *       - in: path
+ *         name: loanId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'emprunt à retourner
+ *     responses:
+ *       200:
+ *         description: Livre retourné avec succès
+ *       404:
+ *         description: Emprunt ou livre non trouvé
+ *       500:
+ *         description: Erreur de serveur
+ */
+router.put('/:loanId/return', loanController.returnBook);
+
 module.exports = router;

@@ -1,6 +1,7 @@
 const Loan = require('../models/Loan');
 const User = require('../models/User');
 const Book = require('../models/Book');
+const Reservation = require('../models/Reservation');
 
 // Récupérer liste emprunts
 const listLoans = async (req, res) => {
@@ -138,10 +139,71 @@ const deleteLoan = async (req, res) => {
   }
 };
 
+
+// Retourner un livre
+const returnBook = async (req, res) => {
+  try {
+    const { loanId } = req.params;
+
+    // Trouver emprunt actif
+    const loan = await Loan.findByPk(loanId);
+    if (!loan) {
+      return res.status(404).json({ error: 'Emprunt non trouvé' });
+    }
+
+    // MAJ date retour
+    loan.return_date = new Date();
+    await loan.save();
+
+    // MAJ statut livre pour verif reservation
+    const book = await Book.findByPk(loan.bookId);
+    if (!book) {
+      return res.status(404).json({ error: 'Livre non trouvé' });
+    }
+
+    // Verif si reservation pour livre
+    const nextReservation = await Reservation.findOne({
+      where: { bookId: book.id },
+      order: [['reservation_date', 'ASC']]
+    });
+
+    if (nextReservation) {
+      // Si réservation existe, créer emprunt pour prochain user
+      const newLoan = await Loan.create({
+        userId: nextReservation.userId,
+        bookId: book.id,
+        loan_date: new Date(),
+        return_date: null
+      });
+
+      // MAJ statut livre "borrowed"
+      book.status = 'borrowed';
+      await book.save();
+
+      // Supprimer la réservation après avoir créé l'emprunt
+      await nextReservation.destroy();
+
+      res.status(200).json({
+        message: 'Livre retourné et prêt attribué à la prochaine réservation',
+        newLoan
+      });
+    } else {
+      // Si aucune réservation, mettre livre available
+      book.status = 'available';
+      await book.save();
+
+      res.status(200).json({ message: 'Livre retourné avec succès et est maintenant disponible' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   listLoans,
   getLoan,
   updateLoan,
   deleteLoan,
-  addLoan
+  addLoan,
+  returnBook
 };
