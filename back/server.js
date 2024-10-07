@@ -5,12 +5,6 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const sequelize = require('./config/db');
 
-// Importer modèles pour BDD
-const Book = require('./models/Book');
-const User = require('./models/User');
-const Loan = require('./models/Loan');
-const Reservation = require('./models/Reservation');
-
 // Routes
 const bookRoutes = require('./routes/bookRoutes');
 const userRoutes = require('./routes/userRoutes');
