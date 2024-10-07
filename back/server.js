@@ -17,7 +17,6 @@ const userRoutes = require('./routes/userRoutes');
 const loanRoutes = require('./routes/loanRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -50,17 +49,22 @@ app.use((err, req, res, next) => {
   res.status(500).send({ error: 'Soucis !' });
 });
 
-// Vérifier co bdd puis run serv
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connexion BDD réussie.');
-    return sequelize.sync({ force: true }); 
-  })
-  .then(() => {
-    console.log('Database & tables créés !');
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`Serveur lancé sur le PORT ${PORT}`));
-  })
-  .catch((err) => {
-    console.error('Impossible de se co BDD :', err);
-  });
+// Exporter `app` pour les tests
+module.exports = app;
+
+// Démarrer le serveur seulement si le fichier est exécuté directement
+if (require.main === module) {
+  sequelize.authenticate()
+    .then(() => {
+      console.log('Connexion BDD réussie.');
+      return sequelize.sync({ force: false });
+    })
+    .then(() => {
+      console.log('Database & tables créés !');
+      const PORT = process.env.PORT || 5000;
+      app.listen(PORT, () => console.log(`Serveur lancé sur le PORT ${PORT}`));
+    })
+    .catch((err) => {
+      console.error('Impossible de se co BDD :', err);
+    });
+}
