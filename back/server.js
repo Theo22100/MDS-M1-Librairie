@@ -15,6 +15,7 @@ const Reservation = require('./models/Reservation');
 const bookRoutes = require('./routes/bookRoutes');
 const userRoutes = require('./routes/userRoutes');
 const loanRoutes = require('./routes/loanRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
 
 
 const app = express();
@@ -41,25 +42,25 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/api/books', bookRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/loans', loanRoutes);
-//app.use('/api/reserve', reserveRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 // Gestion erreurs
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send({ error: 'Something went wrong!' });
+  res.status(500).send({ error: 'Soucis !' });
 });
 
 // Vérifier co bdd puis run serv
 sequelize.authenticate()
   .then(() => {
-    console.log('Connection to the database has been established successfully.');
-    return sequelize.sync({ force: true }); //passer à false après
+    console.log('Connexion BDD réussie.');
+    return sequelize.sync({ force: true }); 
   })
   .then(() => {
-    console.log('Database & tables created!');
+    console.log('Database & tables créés !');
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`Serveur lancé sur le PORT ${PORT}`));
   })
   .catch((err) => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Impossible de se co BDD :', err);
   });
