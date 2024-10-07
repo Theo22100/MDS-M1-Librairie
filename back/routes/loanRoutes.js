@@ -26,7 +26,7 @@ const loanController = require('../controllers/loanController');
  *                   return_date:
  *                     type: string
  *                     format: date-time
- *                   User:
+ *                   user:
  *                     type: object
  *                     properties:
  *                       id:
@@ -37,7 +37,7 @@ const loanController = require('../controllers/loanController');
  *                         type: string
  *                       mail:
  *                         type: string
- *                   Book:
+ *                   book:
  *                     type: object
  *                     properties:
  *                       id:
@@ -67,6 +67,41 @@ router.get('/', loanController.listLoans);
  *     responses:
  *       200:
  *         description: Informations de l'emprunt
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 loan_date:
+ *                   type: string
+ *                   format: date-time
+ *                 return_date:
+ *                   type: string
+ *                   format: date-time
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     name:
+ *                       type: string
+ *                     firstname:
+ *                       type: string
+ *                     mail:
+ *                       type: string
+ *                 book:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     title:
+ *                       type: string
+ *                     author:
+ *                       type: string
+ *                     status:
+ *                       type: string
  *       404:
  *         description: Emprunt non trouvé
  *       500:
@@ -113,13 +148,34 @@ router.get('/:id', loanController.getLoan);
  *                   properties:
  *                     id:
  *                       type: integer
- *                     userId:
- *                       type: integer
- *                     bookId:
- *                       type: integer
  *                     loan_date:
  *                       type: string
  *                       format: date-time
+ *                     return_date:
+ *                       type: string
+ *                       format: date-time
+ *                     user:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         name:
+ *                           type: string
+ *                         firstname:
+ *                           type: string
+ *                         mail:
+ *                           type: string
+ *                     book:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         title:
+ *                           type: string
+ *                         author:
+ *                           type: string
+ *                         status:
+ *                           type: string
  *       400:
  *         description: Livre déjà emprunté ou autre erreur de validation
  *       404:
@@ -129,12 +185,11 @@ router.get('/:id', loanController.getLoan);
  */
 router.post('/', loanController.addLoan);
 
-
 /**
  * @swagger
  * /api/loans/{id}:
  *   put:
- *     summary: Modifier un emprunt
+ *     summary: Modifier date d'emprunt
  *     tags: [Loans]
  *     parameters:
  *       - in: path

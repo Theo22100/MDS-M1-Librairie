@@ -1,60 +1,52 @@
-const Book = require('../models/Book');
+const BookDTO = require('../dtos/BookDTO');
+const bookService = require('../services/bookService');
 
-// Obtenir tous les livres
 const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.findAll();
-    res.json(books);
+    const books = await bookService.getAllBooks();
+    const booksDTO = books.map((book) => new BookDTO(book));
+    res.json(booksDTO);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Ajouter livre
 const addBook = async (req, res) => {
   try {
     const { title, author } = req.body;
-    const newBook = await Book.create({ title, author, status: 'available' });
-    res.status(201).json(newBook);
+    const newBook = await bookService.addBook({ title, author, status: 'available' });
+    res.status(201).json(new BookDTO(newBook));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Modifier livre
 const updateBook = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, author } = req.body;
-    const book = await Book.findByPk(id);
-
-    if (!book) {
-      return res.status(404).json({ error: 'Livre non trouvé' });
-    }
-
-    book.title = title;
-    book.author = author;
-    await book.save();
-    res.json(book);
+    const updatedBook = await bookService.updateBook(id, { title, author });
+    res.json(new BookDTO(updatedBook));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (err.message === 'Livre non trouvé') {
+      res.status(404).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: err.message });
+    }
   }
 };
 
-// Supprimer un livre
 const deleteBook = async (req, res) => {
   try {
     const { id } = req.params;
-    const book = await Book.findByPk(id);
-
-    if (!book) {
-      return res.status(404).json({ error: 'Livre non trouvé' });
-    }
-
-    await book.destroy();
-    res.json({ message: 'Livre supprimé avec succès' });
+    const message = await bookService.deleteBook(id);
+    res.json(message);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (err.message === 'Livre non trouvé') {
+      res.status(404).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: err.message });
+    }
   }
 };
 

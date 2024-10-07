@@ -22,15 +22,19 @@ const userController = require('../controllers/userController');
  *             properties:
  *               name:
  *                 type: string
+ *                 description: Nom de l'utilisateur
  *                 example: "Test"
  *               firstname:
  *                 type: string
+ *                 description: Prénom de l'utilisateur
  *                 example: "Théo"
  *               mail:
  *                 type: string
+ *                 description: Adresse e-mail de l'utilisateur
  *                 example: "test@example.com"
  *               password:
  *                 type: string
+ *                 description: Mot de passe de l'utilisateur
  *                 example: "p4$$w0rd"
  *     responses:
  *       201:
@@ -60,9 +64,11 @@ router.post('/register', userController.register);
  *             properties:
  *               mail:
  *                 type: string
+ *                 description: Adresse e-mail de l'utilisateur
  *                 example: "test@example.com"
  *               password:
  *                 type: string
+ *                 description: Mot de passe de l'utilisateur
  *                 example: "p4$$w0rd"
  *     responses:
  *       200:
@@ -85,6 +91,21 @@ router.post('/login', userController.login);
  *     responses:
  *       200:
  *         description: Liste des utilisateurs
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   firstname:
+ *                     type: string
+ *                   mail:
+ *                     type: string
  *       500:
  *         description: Erreur de serveur
  */
@@ -102,6 +123,7 @@ router.get('/', userController.listUsers);
  *         required: true
  *         schema:
  *           type: integer
+ *         description: ID de l'utilisateur à modifier
  *     requestBody:
  *       required: true
  *       content:
@@ -111,13 +133,16 @@ router.get('/', userController.listUsers);
  *             properties:
  *               name:
  *                 type: string
+ *                 description: Nom de l'utilisateur
  *               firstname:
  *                 type: string
+ *                 description: Prénom de l'utilisateur
  *               mail:
  *                 type: string
+ *                 description: Adresse e-mail de l'utilisateur
  *     responses:
  *       200:
- *         description: Utilisateur mis à jour
+ *         description: Utilisateur mis à jour avec succès
  *       404:
  *         description: Utilisateur non trouvé
  *       500:
@@ -137,9 +162,10 @@ router.put('/:id', userController.updateUser);
  *         required: true
  *         schema:
  *           type: integer
+ *         description: ID de l'utilisateur à supprimer
  *     responses:
  *       200:
- *         description: Utilisateur supprimé
+ *         description: Utilisateur supprimé avec succès
  *       404:
  *         description: Utilisateur non trouvé
  *       500:

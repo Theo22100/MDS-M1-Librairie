@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/bookController');
 
-
 /**
  * @swagger
  * /api/books:
@@ -57,21 +56,6 @@ router.get('/', bookController.getAllBooks);
  *     responses:
  *       201:
  *         description: Livre ajouté avec succès
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                 title:
- *                   type: string
- *                 author:
- *                   type: string
- *                 status:
- *                   type: string
- *       500:
- *         description: Erreur de serveur
  */
 router.post('/', bookController.addBook);
 
@@ -102,10 +86,6 @@ router.post('/', bookController.addBook);
  *     responses:
  *       200:
  *         description: Livre mis à jour avec succès
- *       404:
- *         description: Livre non trouvé
- *       500:
- *         description: Erreur de serveur
  */
 router.put('/:id', bookController.updateBook);
 
@@ -125,10 +105,6 @@ router.put('/:id', bookController.updateBook);
  *     responses:
  *       200:
  *         description: Livre supprimé avec succès
- *       404:
- *         description: Livre non trouvé
- *       500:
- *         description: Erreur de serveur
  */
 router.delete('/:id', bookController.deleteBook);
 

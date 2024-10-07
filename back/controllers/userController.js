@@ -1,100 +1,71 @@
-const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const userService = require('../services/userService');
+const UserDTO = require('../dtos/UserDTO');
 const jwt = require('jsonwebtoken');
 
-// Inscription user
 const register = async (req, res) => {
   try {
     const { name, firstname, mail, password } = req.body;
-
-    // Vérif si user existe déjà
-    const existingUser = await User.findOne({ where: { mail } });
-    if (existingUser) {
-      return res.status(400).json({ error: 'Cet utilisateur existe déjà.' });
-    }
-
-    // Hasher mdp
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ name, firstname, mail, password: hashedPassword });
-
-    res.status(201).json({ message: 'Utilisateur créé avec succès', user: newUser });
+    const newUser = await userService.registerUser({ name, firstname, mail, password });
+    res.status(201).json({ message: 'Utilisateur créé avec succès', user: new UserDTO(newUser) });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(400).json({ error: err.message });
   }
 };
 
-// Connexion user
 const login = async (req, res) => {
   try {
     const { mail, password } = req.body;
+    const user = await userService.loginUser(mail, password);
 
-    // Vérif si user exist
-    const user = await User.findOne({ where: { mail } });
-    if (!user) {
-      return res.status(404).json({ error: 'Utilisateur non trouvé' });
-    }
-
-    // Comparer mdp
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Mot de passe incorrect' });
-    }
-
-    // Générer jeton JWT
+    // Générer un jeton JWT
     const token = jwt.sign({ id: user.id, mail: user.mail }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.status(200).json({ message: 'Connexion réussie', token });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (err.message === 'Utilisateur non trouvé' || err.message === 'Mot de passe incorrect') {
+      res.status(401).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: err.message });
+    }
   }
 };
 
-// Récupérer liste users
 const listUsers = async (req, res) => {
   try {
-    const users = await User.findAll({ attributes: { exclude: ['password'] } });
-    res.status(200).json(users);
+    const users = await userService.getAllUsers();
+    const usersDTO = users.map((user) => new UserDTO(user));
+    res.status(200).json(usersDTO);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Modifier user
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, firstname, mail } = req.body;
-
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ error: 'Utilisateur non trouvé' });
-    }
-
-    user.name = name || user.name;
-    user.firstname = firstname || user.firstname;
-    user.mail = mail || user.mail;
-    await user.save();
-
-    res.status(200).json({ message: 'Utilisateur mis à jour avec succès', user });
+    const updatedUser = await userService.updateUser(id, { name, firstname, mail });
+    res.status(200).json({ message: 'Utilisateur mis à jour avec succès', user: new UserDTO(updatedUser) });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (err.message === 'Utilisateur non trouvé') {
+      res.status(404).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: err.message });
+    }
   }
 };
 
-// Supprimer user
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ error: 'Utilisateur non trouvé' });
-    }
-
-    await user.destroy();
-    res.status(200).json({ message: 'Utilisateur supprimé avec succès' });
+    const message = await userService.deleteUser(id);
+    res.status(200).json(message);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (err.message === 'Utilisateur non trouvé') {
+      res.status(404).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: err.message });
+    }
   }
 };
 
