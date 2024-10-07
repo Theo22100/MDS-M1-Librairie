@@ -1,19 +1,12 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import BookList from './components/BookList';
-import LoanBook from './components/LoanBook';
-import ReturnBook from './components/ReturnBook';
-import ReserveBook from './components/ReserveBook';
+import React from 'react';
+import AppRoutes from './routes/AppRoutes';
+import './styles/App.css';
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact component={BookList} />
-        <Route path="/loan/:id" component={LoanBook} />
-        <Route path="/return/:id" component={ReturnBook} />
-        <Route path="/reserve/:id" component={ReserveBook} />
-      </Switch>
-    </Router>
+    <div className="App">
+      <AppRoutes />
+    </div>
   );
 }
 
