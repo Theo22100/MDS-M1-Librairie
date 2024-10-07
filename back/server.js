@@ -43,10 +43,10 @@ app.use((err, req, res, next) => {
   res.status(500).send({ error: 'Soucis !' });
 });
 
-// Exporter `app` pour les tests
+// Exporter app pour tests
 module.exports = app;
 
-// Démarrer le serveur seulement si le fichier est exécuté directement
+// Démarrer serveur seulement si fichier exécuté
 if (require.main === module) {
   sequelize.authenticate()
     .then(() => {
