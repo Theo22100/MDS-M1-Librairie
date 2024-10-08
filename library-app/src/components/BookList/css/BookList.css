@@ -17,6 +17,7 @@
     margin: 12px 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
+    cursor: pointer;
   }
   
   .book-list-item:hover {
@@ -38,15 +39,13 @@
   }
   
   /* Style spécifique pour le statut du livre */
-  .book-list-item .book-status {
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  .book-list-item .book-status.borrowed {
-    color: #dc3545;
-  }
-  
-  .book-list-item .book-status.available {
-    color: #28a745;
-  }
+.book-list-item .Disponible {
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Statut du livre emprunté */
+.book-list-item .Emprunté {
+  color: #dc3545;
+  font-weight: bold;
+}

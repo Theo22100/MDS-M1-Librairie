@@ -1,10 +1,10 @@
-import axios from 'axios';
+import httpClient from './httpService';
 
-const API_URL = 'http://localhost:5000/api/books';
+const API_URL = `${process.env.REACT_APP_API_URL}/books`;
 
 export const getAllBooks = async () => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await httpClient.get(API_URL);
     return response.data;
   } catch (error) {
     throw error;
@@ -13,7 +13,7 @@ export const getAllBooks = async () => {
 
 export const addBook = async (bookData) => {
   try {
-    const response = await axios.post(API_URL, bookData);
+    const response = await httpClient.post(API_URL, bookData);
     return response.data;
   } catch (error) {
     throw error;
@@ -22,7 +22,7 @@ export const addBook = async (bookData) => {
 
 export const updateBook = async (id, bookData) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, bookData);
+    const response = await httpClient.put(`${API_URL}/${id}`, bookData);
     return response.data;
   } catch (error) {
     throw error;
@@ -31,7 +31,7 @@ export const updateBook = async (id, bookData) => {
 
 export const deleteBook = async (id) => {
   try {
-    const response = await axios.delete(`${API_URL}/${id}`);
+    const response = await httpClient.delete(`${API_URL}/${id}`);
     return response.data;
   } catch (error) {
     throw error;

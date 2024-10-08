@@ -1,10 +1,10 @@
-import axios from 'axios';
+import httpClient from './httpService';
 
-const API_URL = 'http://localhost:5000/api/loans';
+const API_URL = `${process.env.REACT_APP_API_URL}/loans`;
 
 export const getAllLoans = async () => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await httpClient.get(API_URL);
     return response.data;
   } catch (error) {
     throw error;
@@ -13,7 +13,7 @@ export const getAllLoans = async () => {
 
 export const addLoan = async (loanData) => {
   try {
-    const response = await axios.post(API_URL, loanData);
+    const response = await httpClient.post(API_URL, loanData);
     return response.data;
   } catch (error) {
     throw error;
@@ -22,7 +22,7 @@ export const addLoan = async (loanData) => {
 
 export const updateLoan = async (id, loanData) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, loanData);
+    const response = await httpClient.put(`${API_URL}/${id}`, loanData);
     return response.data;
   } catch (error) {
     throw error;
@@ -31,7 +31,7 @@ export const updateLoan = async (id, loanData) => {
 
 export const deleteLoan = async (id) => {
   try {
-    const response = await axios.delete(`${API_URL}/${id}`);
+    const response = await httpClient.delete(`${API_URL}/${id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -40,7 +40,7 @@ export const deleteLoan = async (id) => {
 
 export const returnLoan = async (id) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}/return`);
+    const response = await httpClient.put(`${API_URL}/${id}/return`);
     return response.data;
   } catch (error) {
     throw error;
