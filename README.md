@@ -22,11 +22,13 @@
 
 ### Frontend Local
 Dans un terminal :
+- `cd library-app`
 - `npm i`
 - `npm run start`
 
 ### Backend Local
 Dans un terminal :
+- `cd back`
 - `npm i`
 - `npm run start`
 
