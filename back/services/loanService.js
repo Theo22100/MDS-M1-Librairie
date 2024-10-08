@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Book = require('../models/Book');
 const Reservation = require('../models/Reservation');
 
+// Récupération de tous les emprunts
 const getAllLoans = async () => {
   return await Loan.findAll({
     include: [
@@ -12,6 +13,8 @@ const getAllLoans = async () => {
   });
 };
 
+
+// Récupération emprunt par id
 const getLoanById = async (id) => {
   return await Loan.findByPk(id, {
     include: [
@@ -21,9 +24,12 @@ const getLoanById = async (id) => {
   });
 };
 
+//  Création emprunt
 const createLoan = async (userId, bookId) => {
   const book = await Book.findByPk(bookId);
+  // Vérifier si le livre existe
   if (!book) throw new Error('Livre non trouvé');
+  // Vérifier si le livre est disponible
   if (book.status === 'borrowed') throw new Error('Livre déjà emprunté');
 
   const user = await User.findByPk(userId);
@@ -36,7 +42,7 @@ const createLoan = async (userId, bookId) => {
 
   return await getLoanById(loan.id);
 };
-
+//  Mise à jour emprunt
 const updateLoan = async (id, return_date) => {
   const loan = await Loan.findByPk(id);
   if (!loan) throw new Error('Emprunt non trouvé');
@@ -46,7 +52,7 @@ const updateLoan = async (id, return_date) => {
 
   return loan;
 };
-
+// Suppression emprunt
 const deleteLoan = async (id) => {
   const loan = await Loan.findByPk(id);
   if (!loan) throw new Error('Emprunt non trouvé');
@@ -55,21 +61,23 @@ const deleteLoan = async (id) => {
   return { message: 'Emprunt supprimé avec succès' };
 };
 
+// Retourner un livre
 const returnBook = async (loanId) => {
+  // Vérifier si l'emprunt existe
   const loan = await Loan.findByPk(loanId);
   if (!loan) throw new Error('Emprunt non trouvé');
-
-  loan.return_date = new Date();
-  await loan.save();
-
+  // Vérifier si le livre existe
   const book = await Book.findByPk(loan.bookId);
   if (!book) throw new Error('Livre non trouvé');
-
+  // MAJ date retour
+  loan.return_date = new Date();
+  await loan.save();
+  // Vérifier si le livre a des réservations
   const nextReservation = await Reservation.findOne({
     where: { bookId: book.id },
     order: [['reservation_date', 'ASC']],
   });
-
+  // Si oui, attribuer le prêt à la prochaine réservation
   if (nextReservation) {
     const newLoan = await Loan.create({
       userId: nextReservation.userId,

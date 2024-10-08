@@ -1,6 +1,7 @@
 const reservationService = require('../services/reservationService');
 const ReservationDTO = require('../dtos/reservationDTO');
 
+// Création réservation
 const addReservation = async (req, res) => {
   try {
     const { userId, bookId } = req.body;
@@ -11,6 +12,7 @@ const addReservation = async (req, res) => {
   }
 };
 
+// Récupération de toutes les réservations
 const listReservations = async (req, res) => {
   try {
     const reservations = await reservationService.getAllReservations();
@@ -21,6 +23,7 @@ const listReservations = async (req, res) => {
   }
 };
 
+// Récupération réservation par id
 const getReservation = async (req, res) => {
   try {
     const { id } = req.params;
@@ -34,6 +37,7 @@ const getReservation = async (req, res) => {
   }
 };
 
+// Mise à jour réservation
 const updateReservation = async (req, res) => {
   try {
     const { id } = req.params;
@@ -44,7 +48,7 @@ const updateReservation = async (req, res) => {
     res.status(404).json({ error: err.message });
   }
 };
-
+// Suppression réservation
 const deleteReservation = async (req, res) => {
   try {
     const { id } = req.params;

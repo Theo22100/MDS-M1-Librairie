@@ -1,7 +1,7 @@
 const LoanDTO = require('../dtos/loanDTO');
 const loanService = require('../services/loanService');
 
-
+// Récupération de tous les emprunts
 const listLoans = async (req, res) => {
   try {
     const loans = await loanService.getAllLoans();
@@ -12,6 +12,7 @@ const listLoans = async (req, res) => {
   }
 };
 
+// Récupération emprunt par id
 const getLoan = async (req, res) => {
   try {
     const { id } = req.params;
@@ -25,6 +26,7 @@ const getLoan = async (req, res) => {
   }
 };
 
+// Création emprunt
 const addLoan = async (req, res) => {
   try {
     const { userId, bookId } = req.body;
@@ -35,6 +37,7 @@ const addLoan = async (req, res) => {
   }
 };
 
+// Mise à jour emprunt
 const updateLoan = async (req, res) => {
   try {
     const { id } = req.params;
@@ -46,6 +49,7 @@ const updateLoan = async (req, res) => {
   }
 };
 
+// Suppression emprunt
 const deleteLoan = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,6 +60,7 @@ const deleteLoan = async (req, res) => {
   }
 };
 
+// Retourner un livre
 const returnBook = async (req, res) => {
   try {
     const { loanId } = req.params;
