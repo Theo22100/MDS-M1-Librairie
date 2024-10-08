@@ -1,0 +1,35 @@
+/* Style global pour chaque élément de la liste des réservations */
+.reservation-list-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .reservation-list-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Titre (ID de la réservation) */
+  .reservation-list-item h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* Informations de l'utilisateur et du livre */
+  .reservation-list-item p {
+    font-size: 1rem;
+    color: #555;
+    margin: 6px 0;
+  }
+  
+  /* Style spécifique pour l'information de la date */
+  .reservation-list-item p:last-child {
+    font-style: italic;
+    color: #888;
+  }
+  
