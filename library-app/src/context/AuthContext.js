@@ -1,38 +1,40 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode'; 
 
-// Création du contexte d'authentification
+
 export const AuthContext = createContext();
 
-// Composant fournisseur d'authentification
 const AuthProvider = ({ children }) => {
-  // État qui détermine si l'utilisateur est authentifié
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userId, setUserId] = useState(null); 
 
   // Vérifie si un token est présent dans le localStorage au chargement du composant
   useEffect(() => {
-    const token = localStorage.getItem('token'); // Recup token
+    const token = localStorage.getItem('token');
     if (token) {
-      setIsAuthenticated(true); 
-    } else {
-      console.log('Pas de token trouvé, isAuthenticated reste false'); 
+      const decodedToken = jwtDecode(token); 
+      setUserId(decodedToken.id); // Recup ID user token
+      setIsAuthenticated(true);
     }
-  }, []); // L'effet ne s'exécute qu'une seule fois, au montage du composant
+  }, []);
 
   // Fonction pour se connecter et stocker le token dans localStorage
   const login = (token) => {
-    localStorage.setItem('token', token); 
-    setIsAuthenticated(true); 
+    localStorage.setItem('token', token);
+    const decodedToken = jwtDecode(token); // Décodage du token avec jwtDecode
+    setUserId(decodedToken.id); // MAJ ID user
+    setIsAuthenticated(true);
   };
 
-  // Fonction pour se déconnecter et supprimer le token de localStorage
+  // Fonction pour se déconnecter et supprimer le token
   const logout = () => {
-    localStorage.removeItem('token'); 
-    setIsAuthenticated(false); 
+    localStorage.removeItem('token');
+    setUserId(null); // Réinitialiser id user
+    setIsAuthenticated(false);
   };
 
-  // Fournit les fonctions et l'état d'authentification à tous les composants enfants
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userId, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
