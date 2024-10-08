@@ -99,6 +99,27 @@ const returnBook = async (loanId) => {
   }
 };
 
+const getUserLoans = async (userId) => {
+  // Vérifier si l'utilisateur existe
+  const user = await User.findByPk(userId);
+  if (!user) {
+    throw new Error('Utilisateur non trouvé');
+  }
+
+  // Récupérer les emprunts de l'utilisateur avec les informations livres
+  const loans = await Loan.findAll({
+    where: { userId },
+    include: [
+      {
+        model: Book,
+        attributes: ['id', 'title', 'author', 'status'],
+      },
+    ],
+  });
+
+  return loans;
+};
+
 module.exports = {
   getAllLoans,
   getLoanById,
@@ -106,4 +127,5 @@ module.exports = {
   updateLoan,
   deleteLoan,
   returnBook,
+  getUserLoans,
 };
