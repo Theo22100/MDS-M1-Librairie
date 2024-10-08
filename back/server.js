@@ -21,7 +21,7 @@ const swaggerOptions = {
         openapi: '3.0.0',
         info: {
             title: 'Librairy API',
-            version: '1.0.0',
+            version: '2.0.1',
             description: 'API pour gérer les utilisateurs et les livres',
         },
     },
@@ -59,6 +59,6 @@ if (require.main === module) {
       app.listen(PORT, () => console.log(`Serveur lancé sur le PORT ${PORT}`));
     })
     .catch((err) => {
-      console.error('Impossible de se co BDD :', err);
+      console.error('Impossible de se connecter à la BDD :', err);
     });
 }
