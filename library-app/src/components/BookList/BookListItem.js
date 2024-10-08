@@ -1,28 +1,16 @@
 import React from 'react';
-import './css/BookList.css';
+import BookStatus from './BookStatus';
+import BookActions from './BookActions';
 
-const BookListItem = ({ book, onLoan, onReserve }) => {
-  const statusText = book.status === 'available' ? 'Disponible' : 'Emprunté';
-
-  // Déterminer l'action et le texte du bouton en fonction du statut
-  const buttonText = book.status === 'available' ? 'Emprunter' : 'Réserver';
-
-  const handleButtonClick = () => {
-    if (book.status === 'available') {
-      onLoan(book); // Appelle la fonction d'emprunt
-    } else {
-      onReserve(book); // Appelle la fonction de réservation
-    }
-  };
-
+const BookListItem = ({ book, refreshBooks }) => {
   return (
-    <div className="book-list-item">
-      <h3>{book.title}</h3>
-      <p>Auteur : {book.author}</p> 
-      <p className={statusText}>Statut : {statusText}</p>
-      <button onClick={handleButtonClick} className="action-button">
-        {buttonText}
-      </button>
+    <div className="card h-100">
+      <div className="card-body">
+        <h3 className="card-title">{book.title}</h3>
+        <p className="card-text">Auteur : {book.author}</p>
+        <BookStatus status={book.status} />
+        <BookActions book={book} refreshBooks={refreshBooks} />
+      </div>
     </div>
   );
 };
