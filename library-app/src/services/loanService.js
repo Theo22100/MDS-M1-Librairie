@@ -11,6 +11,16 @@ export const getAllLoans = async () => {
   }
 };
 
+export const getLoansUser = async (userId) => {
+  try {
+    const response = await httpClient.get(`${API_URL}/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 export const addLoan = async (loanData) => {
   try {
     const response = await httpClient.post(API_URL, loanData);
