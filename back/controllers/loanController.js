@@ -26,6 +26,19 @@ const getLoan = async (req, res) => {
   }
 };
 
+const getUserLoans = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const loans = await loanService.getUserLoans(userId);
+    const loanDTOs = loans.map((loan) => new LoanDTO(loan));
+
+    res.status(200).json(loanDTOs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 // Création emprunt
 const addLoan = async (req, res) => {
   try {
@@ -78,4 +91,5 @@ module.exports = {
   updateLoan,
   deleteLoan,
   returnBook,
+  getUserLoans,
 };
