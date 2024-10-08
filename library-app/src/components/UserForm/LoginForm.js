@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { loginUser } from '../../services/userService';
-import './UserForm.css';
+import { useNavigate } from 'react-router-dom';
+import './css/UserForm.css';
 
 const LoginForm = () => {
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginUser({ mail, password });
-      console.log('Connexion réussie :', response);
-      // Vous pouvez rediriger vers la page souhaitée après la connexion
+      await loginUser({ mail, password });
+      navigate('/books');
     } catch (error) {
-      console.error('Erreur lors de la connexion :', error);
+      setErrorMessage('Erreur lors de la connexion. Vérifiez vos identifiants.');
     }
   };
 
@@ -38,6 +40,7 @@ const LoginForm = () => {
         />
       </div>
       <button type="submit">Connexion</button>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     </form>
   );
 };
