@@ -15,9 +15,8 @@ const RegisterForm = () => {
     e.preventDefault();
     try {
       const userData = { name, firstname, mail, password };
-      const response = await registerUser(userData);
+      await registerUser(userData);
       setMessage('Inscription réussie');
-      console.log('Utilisateur inscrit avec succès :', response);
       navigate('/login');
     } catch (error) {
       setMessage('Erreur lors de l\'inscription');

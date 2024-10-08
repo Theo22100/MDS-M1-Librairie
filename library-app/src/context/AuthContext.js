@@ -8,7 +8,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setIsAuthenticated(true);
+      setIsAuthenticated(true);  // Forcer la mise à jour ici
+    } else {
+      console.log('Pas de token trouvé, isAuthenticated reste false');
     }
   }, []);
 

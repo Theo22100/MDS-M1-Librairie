@@ -8,16 +8,15 @@ const LoginForm = () => {
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
-  
   const { login } = useContext(AuthContext); // Récupérer la fonction login du contexte
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { token } = await loginUser({ mail, password }); 
-      login(token); 
-      navigate('/home'); 
+      const { token } = await loginUser({ mail, password });
+      login(token); // Mettre à jour l'état d'authentification en stockant le token
+      navigate('/home');
     } catch (error) {
       setErrorMessage('Erreur lors de la connexion. Vérifiez vos identifiants.');
     }

@@ -8,8 +8,7 @@ const AddReservationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newReservation = await addReservation({ userId, bookId });
-      console.log('Réservation ajoutée avec succès :', newReservation);
+      await addReservation({ userId, bookId });
     } catch (error) {
       console.error('Erreur lors de l\'ajout de la réservation :', error);
     }

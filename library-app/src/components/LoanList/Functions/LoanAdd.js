@@ -8,8 +8,7 @@ const AddLoanForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newLoan = await addLoan({ userId, bookId });
-      console.log('Emprunt ajouté avec succès :', newLoan);
+      await addLoan({ userId, bookId });
     } catch (error) {
       console.error('Erreur lors de l\'ajout de l\'emprunt :', error);
     }
