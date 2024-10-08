@@ -150,6 +150,41 @@ router.get('/', userController.listUsers);
  */
 router.put('/:id', userController.updateUser);
 
+
+/**
+ * @swagger
+ * /api/users/admin/{id}:
+ *   put:
+ *     summary: Modifier un utilisateur en Admin
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'utilisateur à modifier
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               admin:
+ *                 type: boolean
+ *                 description: Nom de l'utilisateur
+ *                 example: "false"
+ *     responses:
+ *       200:
+ *         description: Utilisateur mis à jour avec succès
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur de serveur
+ */
+router.put('/admin/:id', userController.updateAdmin);
+
 /**
  * @swagger
  * /api/users/{id}:

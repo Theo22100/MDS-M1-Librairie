@@ -53,6 +53,35 @@ router.get('/', loanController.listLoans);
 
 /**
  * @swagger
+ * /api/loans/users/{userId}:
+ *   get:
+ *     summary: Récupérer tous les emprunts d'un utilisateur spécifique
+ *     tags: [Loans]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'utilisateur dont vous souhaitez récupérer les emprunts
+ *     responses:
+ *       200:
+ *         description: Liste des emprunts de l'utilisateur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/LoanDTO'
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get('/users/:userId', loanController.getUserLoans);
+
+/**
+ * @swagger
  * /api/loans/{id}:
  *   get:
  *     summary: Obtenir les informations d'un emprunt
@@ -263,5 +292,8 @@ router.delete('/:id', loanController.deleteLoan);
  *         description: Erreur de serveur
  */
 router.put('/:loanId/return', loanController.returnBook);
+
+
+
 
 module.exports = router;

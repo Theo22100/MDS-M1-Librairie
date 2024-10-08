@@ -1,6 +1,7 @@
 const BookDTO = require('../dtos/BookDTO');
 const bookService = require('../services/bookService');
 
+// Récupération de tous les livres
 const getAllBooks = async (req, res) => {
   try {
     const books = await bookService.getAllBooks();
@@ -11,6 +12,7 @@ const getAllBooks = async (req, res) => {
   }
 };
 
+// Création livre
 const addBook = async (req, res) => {
   try {
     const { title, author } = req.body;
@@ -21,6 +23,7 @@ const addBook = async (req, res) => {
   }
 };
 
+// Mise à jour livre
 const updateBook = async (req, res) => {
   try {
     const { id } = req.params;
@@ -36,6 +39,7 @@ const updateBook = async (req, res) => {
   }
 };
 
+// Suppression livre
 const deleteBook = async (req, res) => {
   try {
     const { id } = req.params;
