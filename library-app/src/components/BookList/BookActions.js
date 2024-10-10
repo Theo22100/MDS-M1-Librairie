@@ -1,7 +1,7 @@
 import React from 'react';
 import { addLoan } from '../../services/loanService'; 
 import { addReservation } from '../../services/reservationService'; 
-import { jwtDecode } from 'jwt-decode'; // Utilise jwtDecode pour décoder le token JWT
+import { jwtDecode } from 'jwt-decode'; 
 
 const BookActions = ({ book, refreshBooks }) => {
   // status du livre
@@ -26,7 +26,7 @@ const BookActions = ({ book, refreshBooks }) => {
           alert(`Vous avez réservé : ${book.title}`);
         }
   
-        // Appeler la fonction pour rafraîchir la liste des livres
+        // Appeler la fonction pour rafraîchir liste des livres
         refreshBooks();
       }
     } catch (error) {
