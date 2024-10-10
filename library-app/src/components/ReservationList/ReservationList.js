@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllReservations } from '../../services/reservationService';
 import ReservationListItem from './ReservationListItem';
-import './css/Reservation.css';
-
+// NON FINI
 const ReservationList = () => {
   const [reservations, setReservations] = useState([]);
 
@@ -20,10 +19,12 @@ const ReservationList = () => {
   }, []);
 
   return (
-    <div className="reservation-list">
-      {reservations.map((reservation) => (
-        <ReservationListItem key={reservation.id} reservation={reservation} />
-      ))}
+    <div className="row">
+      <div className="col-md-6 mb-4">
+        {reservations.map((reservation) => (
+          <ReservationListItem key={reservation.id} reservation={reservation} />
+       ))}
+      </div>
     </div>
   );
 };
