@@ -26,6 +26,7 @@ const getLoan = async (req, res) => {
   }
 };
 
+// Récupérer tous les emprunts d'un utilisateur spécifique
 const getUserLoans = async (req, res) => {
   try {
     const { userId } = req.params;
