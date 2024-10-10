@@ -63,10 +63,33 @@ const deleteReservation = async (id) => {
   return { message: 'Réservation supprimée avec succès' };
 };
 
+// Récupérer toutes les réservations d'un utilisateur spécifique
+const getUserReservations = async (userId) => {
+  // Verif si user existe
+  const user = await User.findByPk(userId);
+  if (!user) {
+    throw new Error('Utilisateur non trouvé');
+  }
+
+  // Récupérer les réservations de user avec info livres
+  const reservations = await Reservation.findAll({
+    where: { userId },
+    include: [
+      {
+        model: Book,
+        attributes: ['id', 'title', 'author', 'status'],
+      },
+    ],
+  });
+
+  return reservations;
+};
+
 module.exports = {
   createReservation,
   getAllReservations,
   getReservationById,
   updateReservation,
   deleteReservation,
+  getUserReservations,
 };

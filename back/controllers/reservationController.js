@@ -37,6 +37,20 @@ const getReservation = async (req, res) => {
   }
 };
 
+// Récupérer toutes les réservations d'un utilisateur spécifique
+const getUserReservations = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const reservations = await reservationService.getUserReservations(userId);
+    const reservationDTOs = reservations.map((reservation) => new ReservationDTO(reservation));
+
+    res.status(200).json(reservationDTOs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 // Mise à jour réservation
 const updateReservation = async (req, res) => {
   try {
@@ -65,4 +79,5 @@ module.exports = {
   getReservation,
   updateReservation,
   deleteReservation,
+  getUserReservations,
 };
