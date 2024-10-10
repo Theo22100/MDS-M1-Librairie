@@ -72,7 +72,7 @@ router.get('/', loanController.listLoans);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/LoanDTO'
+ *                 $ref: '#/dtos/LoanDTO'
  *       404:
  *         description: Utilisateur non trouvé
  *       500:
