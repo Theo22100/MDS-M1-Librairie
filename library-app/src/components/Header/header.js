@@ -32,6 +32,9 @@ const Header = () => {
                     <Link to="/loans" className="nav-link">Emprunts</Link>
                   </li>
                   <li className="nav-item">
+                    <Link to="/reservations" className="nav-link">Réservations</Link>
+                  </li>
+                  <li className="nav-item">
                     <button className="btn btn-danger ms-2" onClick={handleLogout}>
                       Déconnexion
                     </button>
