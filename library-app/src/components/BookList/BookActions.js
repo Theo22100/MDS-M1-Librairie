@@ -15,9 +15,6 @@ const BookActions = ({ book, refreshBooks }) => {
         const decodedToken = jwtDecode(token); 
         const userId = decodedToken.id;
   
-        console.log("User ID:", userId);
-        console.log("Book ID:", book.id);
-  
         if (book.status === 'available') {
           await addLoan({ userId, bookId: book.id });
           alert(`Vous avez emprunté : ${book.title}`);
