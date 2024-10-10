@@ -11,6 +11,7 @@
   - [Technologies](#technologies)
     - [Frontend](#frontend)
     - [Backend](#backend)
+    - [BDD](#bdd)
   - [Variables d'environnement](#variables-denvironnement)
     - [Frontend](#frontend-1)
     - [Backend](#backend-1)
@@ -53,6 +54,12 @@ Dans un terminal :
 - **Express.js** 
 - **Sequelize ORM** : ORM pour gérer la base de données MySQL
 - **JWT** : Utilisé pour l'authentification sécurisée
+  
+### BDD
+Base de données MySQL, veuillez créer la base de données `library_management`
+
+![Schéma de la BDD](./bdd/images/bdd.png)
+
 
 ## Variables d'environnement
 
