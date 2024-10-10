@@ -1,5 +1,3 @@
-import React from 'react';
-
 const LoanListItem = ({ loan }) => {
   return (
     <div className="card shadow-sm">
