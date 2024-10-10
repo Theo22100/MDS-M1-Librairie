@@ -3,8 +3,8 @@ import ReservationList from '../components/ReservationList/ReservationList';
 
 const ReservationsPage = () => {
   return (
-    <div>
-      <h1>Mes Réservations</h1>
+    <div className="container">
+      <h1 className="my-4">Mes Réservations</h1>
       <ReservationList />
     </div>
   );
