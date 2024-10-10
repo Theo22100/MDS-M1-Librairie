@@ -1,13 +1,22 @@
-import React from 'react';
-import './css/Reservation.css';
+import React from "react";
+import "./css/Reservation.css";
 
 const ReservationListItem = ({ reservation }) => {
   return (
-    <div className="reservation-list-item">
-      <h3>Réservation #{reservation.id}</h3>
-      <p>Utilisateur : {reservation.user.name} {reservation.user.firstname}</p>
-      <p>Livre : {reservation.book.title} - {reservation.book.author}</p>
-      <p>Date de réservation : {new Date(reservation.reservation_date).toLocaleDateString()}</p>
+    <div className="card shadow-sm">
+      <div className="card-body">
+        <h3 className="card-title">Réservation</h3>
+        <p className="card-text">
+        <strong>Utilisateur :</strong> {reservation.user.name} {reservation.user.firstname}
+        </p>
+        <p className="card-text">
+        <strong>Livre :</strong> {reservation.book.title} - {reservation.book.author}
+        </p>
+        <p className="card-text">
+        <strong>Date de réservation :</strong>{" "}
+          {new Date(reservation.reservation_date).toLocaleDateString()}
+        </p>
+      </div>
     </div>
   );
 };
