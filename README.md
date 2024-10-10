@@ -72,7 +72,7 @@ Base de données MySQL, veuillez créer la base de données `library_management`
 - **DB_PASSWORD** : Mot de passe de la base de données
 - **DB_HOST** : Hôte de la base de données
 - **PORT** : Port du serveur backend
-- **JWT_SECRET** : Secret utilisé pour la signature des tokens JWT
+- **JWT_SECRET** : Code secret utilisé pour la signature des tokens JWT
 
 ## Scripts
 
