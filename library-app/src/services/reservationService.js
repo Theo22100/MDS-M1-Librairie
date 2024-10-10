@@ -29,6 +29,15 @@ export const updateReservation = async (id, reservationData) => {
   }
 };
 
+export const getReservationsUser = async (userId) => {
+  try {
+    const response = await httpClient.get(`${API_URL}/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteReservation = async (id) => {
   try {
     const response = await httpClient.delete(`${API_URL}/${id}`);

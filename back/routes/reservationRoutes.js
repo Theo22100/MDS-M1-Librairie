@@ -85,6 +85,34 @@ router.post('/', reservationController.addReservation);
  *         description: Erreur de serveur
  */
 router.get('/', reservationController.listReservations);
+/**
+ * @swagger
+ * /api/reservations/users/{userId}:
+ *   get:
+ *     summary: Récupérer toutes les réservation d'un utilisateur spécifique
+ *     tags: [Reservations]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'utilisateur dont vous souhaitez récupérer les réservations
+ *     responses:
+ *       200:
+ *         description: Liste des réservations de l'utilisateur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/dtos/ReservationDTO'
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur serveur
+ */
+router.get('/users/:userId', reservationController.getUserReservations);
 
 /**
  * @swagger

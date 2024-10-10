@@ -42,6 +42,7 @@ const createLoan = async (userId, bookId) => {
 
   return await getLoanById(loan.id);
 };
+
 //  Mise à jour emprunt
 const updateLoan = async (id, return_date) => {
   const loan = await Loan.findByPk(id);
@@ -99,14 +100,15 @@ const returnBook = async (loanId) => {
   }
 };
 
+// Récupérer tous les emprunts d'un utilisateur spécifique
 const getUserLoans = async (userId) => {
-  // Vérifier si l'utilisateur existe
+  // Verif si user existe
   const user = await User.findByPk(userId);
   if (!user) {
     throw new Error('Utilisateur non trouvé');
   }
 
-  // Récupérer les emprunts de l'utilisateur avec les informations livres
+  // Récupérer les emprunts de user avec info livres
   const loans = await Loan.findAll({
     where: { userId },
     include: [
