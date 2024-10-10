@@ -3,8 +3,8 @@ import BookList from '../components/BookList/BookList';
 
 const BooksPage = () => {
   return (
-    <div>
-      <h1>Liste des Livres</h1>
+    <div className="container">
+      <h1 className="my-4">Liste des livres</h1>
       <BookList />
     </div>
   );
