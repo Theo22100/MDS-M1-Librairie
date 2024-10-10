@@ -37,7 +37,7 @@ Dans un terminal :
 
 - **Authentification des utilisateurs** : Connexion et inscription pour les utilisateurs.
 - **Gestion des livres** : Voir une liste de livres disponibles et empruntés.
-- **Système de prêts** : Les utilisateurs peuvent emprunter ou réserver des livres. (Réservation non dispo en front)
+- **Système de prêts** : Les utilisateurs peuvent emprunter ou réserver des livres. 
 - **Mise à jour dynamique du statut** : Le système met à jour le statut des livres de manière dynamique après un emprunt ou une réservation.
 - **Gestion des administrateurs** : L'administrateur peut gérer les livres, les utilisateurs, les enregistrements de prêts, les retours (Non dispo en Front).
 
