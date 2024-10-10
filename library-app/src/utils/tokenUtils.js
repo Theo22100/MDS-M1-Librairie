@@ -22,3 +22,11 @@ export const getUserIdFromToken = () => {
   const decodedToken = jwtDecode(token); 
   return decodedToken.id; 
 };
+
+// Fonction pour EXTRAIRE Admin depuis token JWT
+export const getUserAdminFromToken = () => {
+  const token = getToken(); 
+  if (!token) return null; 
+  const decodedToken = jwtDecode(token); 
+  return decodedToken.admin; 
+};
