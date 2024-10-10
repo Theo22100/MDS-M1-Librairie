@@ -106,7 +106,7 @@ router.get('/', reservationController.listReservations);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/ReservationDTO'
+ *                 $ref: '#/dtos/ReservationDTO'
  *       404:
  *         description: Utilisateur non trouvé
  *       500:
