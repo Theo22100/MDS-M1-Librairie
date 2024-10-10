@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 const Header = () => {
-  const { isAuthenticated, logout } = useContext(AuthContext); // Récupération de l'état d'authentification et de la fonction logout
+  const { isAuthenticated, isAdmin, logout } = useContext(AuthContext); 
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -24,7 +24,7 @@ const Header = () => {
               
               {isAuthenticated ? (
                 <>
-                  {/* Connecté */}
+                  {/* Si Connecté */}
                   <li className="nav-item">
                     <Link to="/home" className="nav-link">Accueil</Link>
                   </li>
@@ -34,6 +34,14 @@ const Header = () => {
                   <li className="nav-item">
                     <Link to="/reservations" className="nav-link">Réservations</Link>
                   </li>
+
+                  {/* Si Admin */}
+                  {isAdmin && (
+                    <li className="nav-item">
+                      <Link to="/admin" className="nav-link">Admin</Link>
+                    </li>
+                  )}
+
                   <li className="nav-item">
                     <button className="btn btn-danger ms-2" onClick={handleLogout}>
                       Déconnexion
