@@ -3,23 +3,38 @@ const User = require('../models/User');
 const Book = require('../models/Book');
 const Loan = require('../models/Loan');
 
-// Création réservation
+
 const createReservation = async (userId, bookId) => {
   const book = await Book.findByPk(bookId);
-  // Vérifier si le livre existe
-  if (!book) throw new Error('Livre non trouvé');
-  // Vérifier si le livre est disponible
-  if (book.status !== 'borrowed') throw new Error("Le livre est disponible, une réservation n'est pas nécessaire.");
 
-  // Vérifier si l'utilisateur a déjà réservé le livre
-  const activeLoan = await Loan.findOne({ where: { bookId, return_date: null } });
-  if (activeLoan && activeLoan.userId === userId) {
-    throw new Error("Vous ne pouvez pas réserver un livre que vous avez déjà emprunté.");
+  // Vérifier si livre existe
+  if (!book) throw new Error('Livre non trouvé');
+
+  // Vérifier si livre est disponible
+  if (book.status !== 'borrowed') {
+    throw new Error("Le livre est disponible, une réservation n'est pas nécessaire.");
   }
-  // Vérifier si l'utilisateur a déjà réservé le livre
+
+  // Vérifier si user a déjà emprunté le livre et ne l'a pas encore retourné
+  const activeLoan = await Loan.findOne({ where: { bookId, userId, return_date: null } });
+  if (activeLoan) {
+    console.log('L\'utilisateur a déjà emprunté le livre et ne l\'a pas rendu.');
+    throw new Error("Vous ne pouvez pas réserver un livre que vous avez déjà emprunté et que vous n'avez pas encore retourné.");
+  }
+
+  // Vérifier si user a déjà réservé ce livre
+  const existingReservation = await Reservation.findOne({ where: { bookId, userId } });
+  if (existingReservation) {
+    throw new Error("Vous avez déjà réservé ce livre.");
+  }
+
+
+  // Vérifier si user existe
   const user = await User.findByPk(userId);
   if (!user) throw new Error('Utilisateur non trouvé');
 
+  // Créer la réservation
+  console.log('Création de la réservation pour l\'utilisateur:', userId, 'et le livre:', bookId);
   return await Reservation.create({ userId, bookId, reservation_date: new Date() });
 };
 
